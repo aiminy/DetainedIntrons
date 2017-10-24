@@ -18,6 +18,7 @@ R -e 'library(devtools);library(getPass);install_git("https://gitlab.com/aimin.a
 ```
 
 ## Download example files
+## Use the example data from IRFinder
 ```{r eval=FALSE, message=FALSE, warning=FALSE, results='hide'}
 R -e 'library(DoGs);DoGs:::runDownLoadAndConversonOnCluster("ERP001458",8,"/scratch/projects/bbc/aiminy_project/DI")'
 ```
