@@ -31,6 +31,14 @@ R -e 'library(DetainedIntrons);DetainedIntrons:::UseIRFinderUseIRFinderBuildRef(
 ## Build reference
 ```{r eval=FALSE, message=FALSE, warning=FALSE, results='hide'}
 R -e 'DetainedIntrons:::UseIRFinderBuildRef("ftp://ftp.ensembl.org/pub/release-89/gtf/mus_musculus/Mus_musculus.GRCm38.89.gtf.gz","ReferenceDir")'
+
+# To build reference for hg38
+
+# Output to H_driver
+R -e 'library(DetainedIntrons);DetainedIntrons:::UseIRFinderBuildRef("ftp://ftp.ensembl.org/pub/release-81/gtf/homo_sapiens/Homo_sapiens.GRCh38.81.gtf.gz","/Volumes/Bioinformatics$/Aimin_project/DI/REF/Human-hg38-release81")'
+
+# Output to pegasus
+R -e 'library(DetainedIntrons);DetainedIntrons:::UseIRFinderBuildRef("ftp://ftp.ensembl.org/pub/release-75/gtf/homo_sapiens/Homo_sapiens.GRCh37.75.gtf.gz","/media/pegasus/aiminy_project/DI/REF/Human-hg19-release75")'
 ```
 
 ## Prepare fastq file for each sample
