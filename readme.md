@@ -56,9 +56,10 @@ R -e 'library(DetainedIntrons);DetainedIntrons:::IrFinder("/media/H_driver/Aimin
 # IR.path = "/media/pegasus/aiminy_project/DI"
 # sample.infor.file = "/media/H_driver/Aimin_project/DI/req020416ew.csv"
 R -e 'library(DetainedIntrons);DetainedIntrons:::UseGLM4Analysis(IR.path,sample.infor.file)'
+```
 
 ## Use rMATs to get results
-```{r}
+```{r eval=FALSE, message=FALSE, warning=FALSE, results='hide'}
 # On linux
 R -e 'library(DetainedIntrons);
 IR.path = "/media/H_driver/Aimin_project/DI/Fq_data";
