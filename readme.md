@@ -58,16 +58,32 @@ R -e 'library(DetainedIntrons);DetainedIntrons:::IrFinder("/media/H_driver/Aimin
 R -e 'library(DetainedIntrons);DetainedIntrons:::UseGLM4Analysis(IR.path,sample.infor.file)'
 ```
 
+
+## Filter fastq file firstly
+```{r eval=FALSE, message=FALSE, warning=FALSE, results='hide'}
+
+# On linux
+
+R -e 'library(DetainedIntrons);input.fq.dir = "/media/H_driver/Aimin_project/DI/Fq_data";output.dir ="/media/H_driver/Aimin_project/DI/Fq_data_filtered";trimmed.len=76;DetainedIntrons:::FilterFastq (input.fq.dir,output.dir,trimmed.len)'
+
+R -e 'library(DetainedIntrons);input.fq.dir = "/media/H_driver/Aimin_project/DI/Fq_data";output.dir ="/media/pegasus/Project/DI/Fq_data_filtered";trimmed.len=76;DetainedIntrons:::FilterFastq (input.fq.dir,output.dir,trimmed.len)'
+
+```
+
 ## Use rMATs to get results
 ```{r eval=FALSE, message=FALSE, warning=FALSE, results='hide'}
+
 # On linux
-R -e 'library(DetainedIntrons);
-IR.path = "/media/H_driver/Aimin_project/DI/Fq_data";
-sample.infor.file = "/media/H_driver/Aimin_project/DI/req020416ew.csv";
-gtf = "/media/H_driver/Aimin_project/DI/REF/Human-hg19-release75/transcripts.gtf";
-output.dir = "/media/H_driver/Aimin_project/DI/Output_rMATS";
-baseindex = "/media/H_driver/Aimin_project/DI/REF/Human-hg19-release75/STAR";
-type = "single";
-len = 75;
-DetainedIntrons:::UserMATs(IR.path,sample.infor.file,gtf,baseindex,output.dir,type,len)'
+
+R -e 'library(DetainedIntrons);input.fq.dir = "/media/H_driver/Aimin_project/DI/Fq_data";output.dir ="/media/H_driver/Aimin_project/DI/Fq_data_trimmed";trimmed.len=76;DetainedIntrons:::TrimFastq(input.fq.dir,output.dir,trimmed.len)'
+
+R -e 'library(DetainedIntrons);IR.path = "/media/H_driver/Aimin_project/DI/Fq_data";sample.infor.file = "/media/H_driver/Aimin_project/DI/req020416ew.csv";gtf = "/media/H_driver/Aimin_project/DI/REF/Human-hg19-release75/transcripts.gtf";output.dir = "/media/H_driver/Aimin_project/DI/Output_rMATS";baseindex = "/media/H_driver/Aimin_project/DI/REF/Human-hg19-release75/STAR";type = "single";len = 75;DetainedIntrons:::UserMATs(IR.path,sample.infor.file,gtf,baseindex,output.dir,type,len)'
+
+
+R -e 'library(DetainedIntrons);IR.path = "/media/H_driver/Aimin_project/DI/Fq_data_trimmed";sample.infor.file = "/media/H_driver/Aimin_project/DI/req020416ew.csv";gtf = "/media/H_driver/Aimin_project/DI/REF/Human-hg19-release75/transcripts.gtf";output.dir = "/media/H_driver/Aimin_project/DI/Output_rMATS";baseindex = "/media/H_driver/Aimin_project/DI/REF/Human-hg19-release75/STAR";type = "single";len = 76;DetainedIntrons:::UserMATs(IR.path,sample.infor.file,gtf,baseindex,output.dir,type,len)'
+
+R -e 'library(DetainedIntrons);IR.path = "/media/H_driver/Aimin_project/DI/Fq_data_trimmed";sample.infor.file = "/media/H_driver/Aimin_project/DI/req020416ew.csv";gtf = "/media/H_driver/Aimin_project/DI/REF/Human-hg19-release75/transcripts.gtf";output.dir = "/media/H_driver/Aimin_project/DI/Output_rMATS";baseindex = "/media/H_driver/Aimin_project/DI/REF/Human-hg19-release75/STAR";type = "single";len = 76;DetainedIntrons:::UserMATs(IR.path,sample.infor.file,gtf,baseindex,output.dir,type,len)'
+
+ R -e 'library(DetainedIntrons);IR.path = "/media/pegasus/Project/DI/Fq_data_filtered";sample.infor.file = "/media/H_driver/Aimin_project/DI/req020416ew.csv";gtf = "/media/H_driver/Aimin_project/DI/REF/Human-hg19-release75/transcripts.gtf";output.dir = "/media/pegasus/Project/DI/Output_rMATS_filtered";baseindex = "/media/H_driver/Aimin_project/DI/REF/Human-hg19-release75/STAR";type = "single";len = 76;DetainedIntrons:::UserMATs(IR.path,sample.infor.file,gtf,baseindex,output.dir,type,len)'
+
 ```
