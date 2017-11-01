@@ -53,11 +53,19 @@ R -e 'library(DetainedIntrons);DetainedIntrons:::IrFinder("/media/H_driver/Aimin
 
 ## Use GLM for analysis
 ```{r eval=FALSE, message=FALSE, warning=FALSE, results='hide'}
+
+# On linux
 # IR.path = "/media/pegasus/aiminy_project/DI"
 # sample.infor.file = "/media/H_driver/Aimin_project/DI/req020416ew.csv"
-R -e 'library(DetainedIntrons);DetainedIntrons:::UseGLM4Analysis(IR.path,sample.infor.file)'
-```
+R -e 'library(DetainedIntrons);res <- DetainedIntrons:::UseGLM4Analysis(IR.path,sample.infor.file)'
 
+
+# On windows
+# IR.path = "C:/Users/lxw391/Dropbox (BBSR)/Aimin_project/DI/IRFinderResults"
+# sample.infor.file = "H:/Aimin_project/DI/req020416ew.csv"
+
+res <- DetainedIntrons:::UseGLM4Analysis(IR.path,sample.infor.file)
+```
 
 ## Filter fastq file firstly
 ```{r eval=FALSE, message=FALSE, warning=FALSE, results='hide'}
@@ -79,7 +87,6 @@ R -e 'library(DetainedIntrons);input.fq.dir = "/media/H_driver/Aimin_project/DI/
 
 R -e 'library(DetainedIntrons);IR.path = "/media/H_driver/Aimin_project/DI/Fq_data";sample.infor.file = "/media/H_driver/Aimin_project/DI/req020416ew.csv";gtf = "/media/H_driver/Aimin_project/DI/REF/Human-hg19-release75/transcripts.gtf";output.dir = "/media/H_driver/Aimin_project/DI/Output_rMATS";baseindex = "/media/H_driver/Aimin_project/DI/REF/Human-hg19-release75/STAR";type = "single";len = 75;DetainedIntrons:::UserMATs(IR.path,sample.infor.file,gtf,baseindex,output.dir,type,len)'
 
-
 R -e 'library(DetainedIntrons);IR.path = "/media/H_driver/Aimin_project/DI/Fq_data_trimmed";sample.infor.file = "/media/H_driver/Aimin_project/DI/req020416ew.csv";gtf = "/media/H_driver/Aimin_project/DI/REF/Human-hg19-release75/transcripts.gtf";output.dir = "/media/H_driver/Aimin_project/DI/Output_rMATS";baseindex = "/media/H_driver/Aimin_project/DI/REF/Human-hg19-release75/STAR";type = "single";len = 76;DetainedIntrons:::UserMATs(IR.path,sample.infor.file,gtf,baseindex,output.dir,type,len)'
 
 R -e 'library(DetainedIntrons);IR.path = "/media/H_driver/Aimin_project/DI/Fq_data_trimmed";sample.infor.file = "/media/H_driver/Aimin_project/DI/req020416ew.csv";gtf = "/media/H_driver/Aimin_project/DI/REF/Human-hg19-release75/transcripts.gtf";output.dir = "/media/H_driver/Aimin_project/DI/Output_rMATS";baseindex = "/media/H_driver/Aimin_project/DI/REF/Human-hg19-release75/STAR";type = "single";len = 76;DetainedIntrons:::UserMATs(IR.path,sample.infor.file,gtf,baseindex,output.dir,type,len)'
@@ -89,4 +96,8 @@ R -e 'library(DetainedIntrons);IR.path = "/media/H_driver/Aimin_project/DI/Fq_da
 ```{r eval=FALSE, message=FALSE, warning=FALSE, results='hide'}
 # use "python /home/aiminyan/rMATS.3.2.2.beta/RNASeq-MATS.py" to run RNASeq-MATS.py
 R -e 'library(DetainedIntrons);IR.path = "/media/pegasus/Project/DI/Fq_data_filtered";sample.infor.file = "/media/H_driver/Aimin_project/DI/req020416ew.csv";gtf = "/media/H_driver/Aimin_project/DI/REF/Human-hg19-release75/transcripts.gtf";output.dir = "/media/pegasus/Project/DI/Output_rMATS_filtered";baseindex = "/media/H_driver/Aimin_project/DI/REF/Human-hg19-release75/STAR";type = "single";len = 76;DetainedIntrons:::UserMATs(IR.path,sample.infor.file,gtf,baseindex,output.dir,type,len)'
+
+#Make a summary for rMATs output
+R -e 'input.dir.4.rMATs.output <- "~/pegasus/Project/DI/Output_rMATS_filtered/MATS_output";output.dir <- "~/pegasus/Project/DI/rMATS_Sum";DetainedIntrons:::sum4rMATs(input.dir.4.rMATs.output,output.dir)'
+# You can find results in ~/pegasus/Project/DI/rMATS_Sum
 ```
