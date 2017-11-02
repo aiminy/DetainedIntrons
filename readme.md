@@ -37,7 +37,23 @@ R -e 'library(DetainedIntrons);DetainedIntrons:::UseIRFinderBuildRef("ftp://ftp.
 R -e 'library(DetainedIntrons);DetainedIntrons:::ParserSampleInfor("/media/H_driver/Aimin_project/DI/req020416ew.csv","/media/H_driver/James/Data_temp","/media/H_driver/Aimin_project/DI/Fq_data")'
 ```
 
-### IRFinder
+### Prepare QC report for fastq files
+ 
+#### QC analysis for eahc fastq
+```{r eval=FALSE, message=FALSE, warning=FALSE, results='hide'}
+R -e 'input.fastqFile.dir <- "~/pegasus/Project/Alejandro_atac/DATA/Formatted";output.fastqc <- "~/pegasus/Project/Alejandro_AtacSeq/QC_Formatted";DetainedIntrons:::UseFastQC(input.fastqFile.dir,output.fastqc)'
+```
+
+#### Get summary for QC
+```{r eval=FALSE, message=FALSE, warning=FALSE, results='hide'}
+# For unformated
+R -e 'input.fastqcOutputDir <- "~/pegasus/Project/Alejandro_atac/QC";output.multiqc <- "~/pegasus/Project/Alejandro_AtacSeq/QC_Sum";DetainedIntrons:::UseMultiqc4Sum(input.fastqcOutputDir,output.multiqc)'
+
+# For formated
+R -e 'input.fastqcOutputDir <- "~/pegasus/Project/Alejandro_AtacSeq/QC_Formatted";output.multiqc <- "~/pegasus/Project/Alejandro_AtacSeq/QC_Sum_4_Formatted";DetainedIntrons:::UseMultiqc4Sum(input.fastqcOutputDir,output.multiqc)'
+```
+
+### Find IR using IRFinder
 ```{r eval=FALSE, message=FALSE, warning=FALSE, results='hide'}
 R -e 'library(DetainedIntrons);DetainedIntrons:::IrFinder("/media/H_driver/Aimin_project/DI/Fq_data","/media/H_driver/Aimin_project/DI/REF/Human-hg19-release75","AGATCGGAAG","/media/pegasus/aiminy_project/DI")'
 ```
