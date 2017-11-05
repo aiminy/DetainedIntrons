@@ -95,3 +95,18 @@ R -e 'library(DetainedIntrons);IR.path = "/media/pegasus/Project/DI/Fq_data_filt
 R -e 'input.dir.4.rMATs.output <- "~/pegasus/Project/DI/Output_rMATS_filtered/MATS_output";output.dir <- "~/pegasus/Project/DI/rMATS_Sum";DetainedIntrons:::sum4rMATs(input.dir.4.rMATs.output,output.dir)'
 # You can find results in ~/pegasus/Project/DI/rMATS_Sum
 ```
+
+### Get Sashimiplot from summary.txt file
+```{r eval=FALSE, message=FALSE, warning=FALSE, results='hide'}
+
+R -e 'library(DetainedIntrons);sample.infor.file <- "/Volumes/Bioinformatics$/Aimin_project/DI/req020416ew.csv";input.sum.file <- "~/pegasus/Project/DI/Output_rMATS_filtered/summary.txt";eventType <- "RI";eventsFile <- "/Users/axy148/pegasus/Project/DI/Output_rMATS_filtered/MATS_output/RI.MATS.ReadsOnTargetAndJunctionCounts.txt";outDir <- "/Users/axy148/pegasus/Project/DI/Output_rMATS_filtered/Sashimiplot";cmd <- DetainedIntrons:::generateSashimiplot(sample.infor.file,input.sum.file,eventType,eventsFile,outDir)'
+
+# For submit a job in pegasus, You need to install the following python modules if you do not have them on your machine 
+# module rm python;source activate python2;conda install -c anaconda scipy;conda install -c anaconda matplotlib;conda install -c bioconda pysam;conda install misopy
+#  
+# Check if there exists *.bai files in your rMATS output directory  
+# find  /scratch/projects/bbc/Project/DI/Output_rMATS_filtered -type f -name "*.bai" -exec rm -i {} \;
+#  
+R -e 'library(DoGs);library(DetainedIntrons);sample.infor.file <- "/scratch/projects/bbc/Project/DI/req020416ew.csv";input.sum.file <- "/scratch/projects/bbc/Project/DI/Output_rMATS_filtered/summary.txt";eventType <- "RI";eventsFile <- "/scratch/projects/bbc/Project/DI/Output_rMATS_filtered/MATS_output/RI.MATS.ReadsOnTargetAndJunctionCounts.txt";outDir <- "/scratch/projects/bbc/Project/DI/Output_rMATS_filtered/Sashimiplot";DetainedIntrons:::submitJob(sample.infor.file,input.sum.file,eventType,eventsFile,outDir,job.name="plotSashimi",jT="parallel",wT="72:00",cpu=16,ram=25000,spanPtile=8)'
+
+```
