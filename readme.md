@@ -99,8 +99,10 @@ R -e 'input.dir.4.rMATs.output <- "~/pegasus/Project/DI/Output_rMATS_filtered/MA
 ### Get Sashimiplot from summary.txt file
 ```{r eval=FALSE, message=FALSE, warning=FALSE, results='hide'}
 
+# On local linux or macs
 R -e 'library(DetainedIntrons);sample.infor.file <- "/Volumes/Bioinformatics$/Aimin_project/DI/req020416ew.csv";input.sum.file <- "~/pegasus/Project/DI/Output_rMATS_filtered/summary.txt";eventType <- "RI";eventsFile <- "/Users/axy148/pegasus/Project/DI/Output_rMATS_filtered/MATS_output/RI.MATS.ReadsOnTargetAndJunctionCounts.txt";outDir <- "/Users/axy148/pegasus/Project/DI/Output_rMATS_filtered/Sashimiplot";cmd <- DetainedIntrons:::generateSashimiplot(sample.infor.file,input.sum.file,eventType,eventsFile,outDir)'
 
+# On cluster
 # For submit a job in pegasus, You need to install the following python modules if you do not have them on your machine 
 # module rm python;source activate python2;conda install -c anaconda scipy;conda install -c anaconda matplotlib;conda install -c bioconda pysam;conda install misopy
 #  
