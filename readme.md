@@ -38,8 +38,8 @@ R -e 'library(DetainedIntrons);DetainedIntrons:::ParserSampleInfor("/media/H_dri
 ```
 
 ### Prepare QC report for fastq files
- 
-#### QC analysis for eahc fastq
+
+#### QC analysis for each fastq
 ```{r eval=FALSE, message=FALSE, warning=FALSE, results='hide'}
 R -e 'input.fastqFile.dir <- "~/pegasus/Project/Alejandro_atac/DATA/Formatted";output.fastqc <- "~/pegasus/Project/Alejandro_AtacSeq/QC_Formatted";DetainedIntrons:::UseFastQC(input.fastqFile.dir,output.fastqc)'
 ```
@@ -55,7 +55,13 @@ R -e 'input.fastqcOutputDir <- "~/pegasus/Project/Alejandro_AtacSeq/QC_Formatted
 
 ### Find IR using IRFinder
 ```{r eval=FALSE, message=FALSE, warning=FALSE, results='hide'}
+
+# On linux
 R -e 'library(DetainedIntrons);DetainedIntrons:::IrFinder("/media/H_driver/Aimin_project/DI/Fq_data","/media/H_driver/Aimin_project/DI/REF/Human-hg19-release75","AGATCGGAAG","/media/pegasus/aiminy_project/DI")'
+
+# On Macs
+R -e 'library(DetainedIntrons);DetainedIntrons:::IrFinder("/Volumes/Bioinformatics$/Aimin_project/DI/Fq_data","/Volumes/Bioinformatics$/Aimin_project/DI/REF/Human-hg19-release75","AGATCGGAAG","~/pegasus/aiminy_project/DI")'
+
 ```
 
 ### Use GLM for analysis
@@ -70,7 +76,12 @@ R -e 'library(DetainedIntrons);res <- DetainedIntrons:::UseGLM4Analysis(IR.path,
 # IR.path = "C:/Users/lxw391/Dropbox (BBSR)/Aimin_project/DI/IRFinderResults"
 # sample.infor.file = "H:/Aimin_project/DI/req020416ew.csv"
 
+# On Macs
+# IR.path = "/Users/axy148/pegasus/aiminy_project/DI"
+# sample.infor.file = "/Volumes/Bioinformatics$/Aimin_project/DI/req020416ew.csv"
+
 res <- DetainedIntrons:::UseGLM4Analysis(IR.path,sample.infor.file)
+
 ```
 
 ## Use rMATs to get results
@@ -102,6 +113,10 @@ R -e 'input.dir.4.rMATs.output <- "~/pegasus/Project/DI/Output_rMATS_filtered/MA
 # On local linux or macs
 R -e 'library(DetainedIntrons);sample.infor.file <- "/Volumes/Bioinformatics$/Aimin_project/DI/req020416ew.csv";input.sum.file <- "~/pegasus/Project/DI/Output_rMATS_filtered/summary.txt";eventType <- "RI";eventsFile <- "/Users/axy148/pegasus/Project/DI/Output_rMATS_filtered/MATS_output/RI.MATS.ReadsOnTargetAndJunctionCounts.txt";outDir <- "/Users/axy148/pegasus/Project/DI/Output_rMATS_filtered/Sashimiplot";cmd <- DetainedIntrons:::generateSashimiplot(sample.infor.file,input.sum.file,eventType,eventsFile,outDir)'
 
+# We select "RI.MATS.ReadsOnTargetAndJunctionCounts.txt", so c is assigned a value of 5 since the 5th column in summary.txt is for SigEvents.JC+readsOnTarget; if we select "SigEvents.JC.only", c is assigned a value of 3 since the 3rd column in summary.txt is for SigEvents.JC.only.
+# 
+R -e 'sample.infor.file <- "/Volumes/Bioinformatics$/Aimin_project/DI/req020416ew.csv";input.sum.file <- "~/pegasus/Project/DI/Output_rMATS_filtered/summary.txt";eventType <- "RI";eventsFile <- "/Users/axy148/pegasus/Project/DI/Output_rMATS_filtered/MATS_output/RI.MATS.ReadsOnTargetAndJunctionCounts.txt";c <- 5;outDir <- "/Users/axy148/pegasus/Project/DI/Output_rMATS_filtered/Sashimiplot";cmd <- DetainedIntrons:::generateSashimiplot(sample.infor.file,input.sum.file,eventType,eventsFile,c,outDir)'
+
 # On cluster
 # For submit a job in pegasus, You need to install the following python modules if you do not have them on your machine 
 # module rm python;source activate python2;conda install -c anaconda scipy;conda install -c anaconda matplotlib;conda install -c bioconda pysam;conda install misopy
@@ -112,3 +127,11 @@ R -e 'library(DetainedIntrons);sample.infor.file <- "/Volumes/Bioinformatics$/Ai
 R -e 'library(DoGs);library(DetainedIntrons);sample.infor.file <- "/scratch/projects/bbc/Project/DI/req020416ew.csv";input.sum.file <- "/scratch/projects/bbc/Project/DI/Output_rMATS_filtered/summary.txt";eventType <- "RI";eventsFile <- "/scratch/projects/bbc/Project/DI/Output_rMATS_filtered/MATS_output/RI.MATS.ReadsOnTargetAndJunctionCounts.txt";outDir <- "/scratch/projects/bbc/Project/DI/Output_rMATS_filtered/Sashimiplot";DetainedIntrons:::submitJob(sample.infor.file,input.sum.file,eventType,eventsFile,outDir,job.name="plotSashimi",jT="parallel",wT="72:00",cpu=16,ram=25000,spanPtile=8)'
 
 ```
+### Peform GSEA using the preranked files 
+```{r eval=FALSE, message=FALSE, warning=FALSE, results='hide'}
+
+# generated the preranked files
+R -e 'library(DetainedIntrons);input.file <- "~/AiminDropBox/Aimin_project/DI/DI_Results_for_David_11-8-2017/RI.MATS.ReadsOnTargetAndJunctionCounts.txt";output.dir <- "~/AiminDropBox/Aimin_project/DI";generatePreRankedFile4GSEA(input.file,30,output.dir)'
+
+```
+
